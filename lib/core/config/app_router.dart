@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie/features/layout/layoutView.dart';
+import 'package:movie/features/pages/home/movie_details.dart';
 
 import '../../features/pages/splash/splash_view.dart';
 import 'page_routes_name.dart';
@@ -13,6 +14,10 @@ class AppRouter {
       case PageRoutesName.layout:
         return MaterialPageRoute(
             builder: (context) => const LayOutView(), settings: settings);
+
+      case PageRoutesName.movie_details:
+        return MaterialPageRoute(
+            builder: (context) => const MovieDetails(), settings: settings);
 
       default:
         return MaterialPageRoute(

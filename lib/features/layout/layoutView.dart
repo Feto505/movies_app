@@ -27,6 +27,7 @@ class _LayOutViewState extends State<LayOutView> {
     return Scaffold(
       body: ScreensList[selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 3,
         currentIndex: selectedIndex,
         onTap: (index) {
           setState(() {
@@ -38,7 +39,7 @@ class _LayOutViewState extends State<LayOutView> {
               icon: ImageIcon(AssetImage("assets/icons/Home.png")),
               label: "home"),
           BottomNavigationBarItem(
-              icon: ImageIcon(AssetImage("assets/icons/Search.png")),
+              icon: ImageIcon(AssetImage("assets/icons/search.png")),
               label: "search"),
           BottomNavigationBarItem(
               icon: ImageIcon(AssetImage("assets/icons/browse.png")),
