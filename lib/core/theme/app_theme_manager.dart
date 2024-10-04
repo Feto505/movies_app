@@ -27,22 +27,22 @@ class AppThemeManager {
       ),
       //type: BottomNavigationBarType.shifting
     ),
-    // scaffoldBackgroundColor: Colors.transparent,
-    // appBarTheme: const AppBarTheme(
-    //     iconTheme: IconThemeData(size: 35, color: Colors.white),
-    //     backgroundColor: Colors.green,
-    //     centerTitle: true,
-    //     titleTextStyle: TextStyle(
-    //       fontSize: 22,
-    //       // fontWeight: FontWeight.bold,
-    //       fontFamily: "Exo",
-    //       color: Colors.white,
-    //     ),
-    //     shape: RoundedRectangleBorder(
-    //         borderRadius: BorderRadius.only(
-    //       bottomLeft: Radius.circular(30),
-    //       bottomRight: Radius.circular(30),
-    //     ))),
+    scaffoldBackgroundColor: Color(0xff1E1E1E),
+    appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(size: 25, color: Colors.white),
+        backgroundColor: Color(0xff1E1E1E),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+          fontSize: 22,
+          // fontWeight: FontWeight.bold,
+          fontFamily: "Inter",
+          color: Colors.white,
+        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(30),
+          bottomRight: Radius.circular(30),
+        ))),
     textTheme: const TextTheme(
       titleLarge: TextStyle(
           fontSize: 22,
