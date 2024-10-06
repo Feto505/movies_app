@@ -1,4 +1,4 @@
 class Constants {
-  static const String apiKey = "d13f4eac5aaa42808d9ccb83544ee5fb";
-  static const String domain = "newsapi.org";
+  static const String apiKey = "675604a83c2d17d1683df7f426d8c5b4";
+  static const String domain = "api.themoviedb.org";
 }
