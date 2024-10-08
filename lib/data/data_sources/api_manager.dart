@@ -97,25 +97,6 @@ class ApiManager {
     }
   }
 
-/*static Future<List<Article>> fetchArticlesList(String sourceId) async {
-    var url = Uri.https(
-      Constants.domain,
-      "/v2/top-headlines",
-      {
-        "apiKey": Constants.apiKey,
-        "sources": sourceId,
-      },
-    );
-    final response = await http.get(url);
-    if (response.statusCode == 200) {
-      //Parsing
-      Map<String, dynamic> data = jsonDecode(response.body);
-      ArticlesModel articlesModel = ArticlesModel.fromJson(data);
-      return articlesModel.articles;
-    } else {
-      throw Exception("Failed to get source list");
-    }
-  }*/
 
   /// =======================================================
 // static Future<List<Article>> fetchArticlesList({String? sourceId,String? q}) async{

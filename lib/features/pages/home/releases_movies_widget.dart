@@ -21,18 +21,26 @@ class ReleasesMoviesWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
           child: Stack(
             children: [
-              Image.network(
-                "https://image.tmdb.org/t/p/w500${results.posterPath}",
-                // "assets/images/exmp.png",
-                // results.backdropPath.toString(),
+              SizedBox(
                 width: 96,
                 height: 130,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.network(
+                    "https://image.tmdb.org/t/p/w500${results.posterPath}",
+                    // "assets/images/exmp.png",
+                    // results.backdropPath.toString(),
+                    width: 96,
+                    height: 130,
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
               Positioned(
                   left: 0,
                   top: 0,
                   child: ClipRRect(
-                      child: Image.asset('assets/icons/bookmark.png'))),
+                      child: Image.asset('assets/icons/bookmark1.png'))),
             ],
           ),
         ),

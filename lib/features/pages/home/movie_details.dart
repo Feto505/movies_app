@@ -14,18 +14,48 @@ class MovieDetails extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Color(0xff282A28),
       appBar: AppBar(
-        title: const Text('Title'),
+        title: Text(result.title.toString()),
       ),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(
-              "https://image.tmdb.org/t/p/w500${result.backdropPath}",
-              fit: BoxFit.cover,
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Image.network(
+                  "https://image.tmdb.org/t/p/w500${result.backdropPath}",
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-            Text('${result.title}'),
-            Text('${result.releaseDate}'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '${result.title}',
+                style: theme.textTheme.bodyMedium,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Row(
+                children: [
+                  Text('${result.releaseDate}',
+                      style: theme.textTheme.displaySmall!
+                          .copyWith(color: Colors.white54)),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Text('popularity: ${result.popularity}',
+                      style: theme.textTheme.displaySmall!
+                          .copyWith(color: Colors.white54)),
+                ],
+              ),
+            ),
+            const SizedBox(
+              height: 10,
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -35,14 +65,20 @@ class MovieDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Stack(
                       children: [
-                        Image.network(
-                          width: 120,
-                          height: 160,
-                          "https://image.tmdb.org/t/p/w500${result.posterPath}",
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15),
+                            child: Image.network(
+                              width: 110,
+                              height: 160,
+                              "https://image.tmdb.org/t/p/w500${result.posterPath}",
+                            ),
+                          ),
                         ),
                         Positioned(
-                            left: 0,
-                            top: 0,
+                            left: 1,
+                            top: 10,
                             child: ClipRRect(
                                 child:
                                     Image.asset('assets/icons/bookmark1.png'))),
@@ -93,10 +129,25 @@ class MovieDetails extends StatelessWidget {
                           height: 12,
                         ),
                         SizedBox(
-                          width: 205,
+                          width: 215,
                           child: Column(
                             children: [
-                              Text(result.overview.toString()),
+                              Text(
+                                result.overview.toString(),
+                                style: theme.textTheme.displaySmall,
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: ColorsPalette.primaryColor,
+                                  ),
+                                  Text(result.voteAverage.toString()),
+                                ],
+                              ),
                             ],
                           ),
                         )

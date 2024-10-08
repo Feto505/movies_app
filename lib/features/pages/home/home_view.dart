@@ -43,27 +43,18 @@ class HomeView extends StatelessWidget {
                             ),
                           );
                         }
-                        List<ResultsPopular> articleList = snapshot.data ?? [];
-                        // return CategoryViewDetails(sourceList: sourceList);
+                        List<ResultsPopular> resultList = snapshot.data ?? [];
+
                         return Expanded(
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
-                                PopularWidget(results: articleList[index]),
-                            itemCount: articleList.length,
-                            // itemCount: 2,
+                                PopularWidget(results: resultList[index]),
+                            itemCount: resultList.length,
                           ),
                         );
                       },
                     )),
-                // SizedBox(
-                //     height: 150,
-                //     child: ListView.builder(
-                //       scrollDirection: Axis.horizontal,
-                //       itemBuilder: (context, index) =>
-                //            ReleasesMoviesWidget(results: ,),
-                //       itemCount: 10,
-                //     )),
               ],
             ),
           ),
@@ -85,7 +76,7 @@ class HomeView extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     )),
                 SizedBox(
-                    height: 220,
+                    height: 150,
                     child: FutureBuilder<List<Results>>(
                       future: ApiManager.fetchUpcomingMoviesList(),
                       builder: (context, snapshot) {
@@ -100,35 +91,19 @@ class HomeView extends StatelessWidget {
                             ),
                           );
                         }
-                        List<Results> articleList = snapshot.data ?? [];
-                        // return CategoryViewDetails(sourceList: sourceList);
+                        List<Results> resultList = snapshot.data ?? [];
                         return Expanded(
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
                                 ReleasesMoviesWidget(
-                                    results: articleList[index]),
-                            itemCount: articleList.length,
-                            // itemCount: 2,
+                                    results: resultList[index]),
+                            itemCount: resultList.length,
                           ),
                         );
                       },
                     )
-                    // ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemBuilder: (context, index) =>
-                    //       const RecommendedMoviesWidget(),
-                    //   itemCount: 7,
-                    // )
                     ),
-                // SizedBox(
-                //     height: 150,
-                //     child: ListView.builder(
-                //       scrollDirection: Axis.horizontal,
-                //       itemBuilder: (context, index) =>
-                //            ReleasesMoviesWidget(results: ,),
-                //       itemCount: 10,
-                //     )),
               ],
             ),
           ),
@@ -164,40 +139,20 @@ class HomeView extends StatelessWidget {
                             ),
                           );
                         }
-                        List<ResultsTopRated> articleList = snapshot.data ?? [];
-                        // return CategoryViewDetails(sourceList: sourceList);
+                        List<ResultsTopRated> resultList = snapshot.data ?? [];
+
                         return Expanded(
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
-                                // Column(
-                                //   children: [
-                                //     Center(
-                                //       child: Text(articleList[index].title.toString(),style: const TextStyle(
-                                //           color: Colors.red
-                                //       ),),
-                                //     ),
-                                //     // Center(
-                                //     //   child: Text(articleList[1].title.toString(),style: TextStyle(
-                                //     //     color: Colors.red
-                                //     //   ),),
-                                //     // ),
-                                //   ],
-                                // ),
                                 RecommendedMoviesWidget(
-                                    results: articleList[index]),
-                            itemCount: articleList.length,
+                                    results: resultList[index]),
+                            itemCount: resultList.length,
                             // itemCount: 2,
                           ),
                         );
                       },
                     )
-                    // ListView.builder(
-                    //   scrollDirection: Axis.horizontal,
-                    //   itemBuilder: (context, index) =>
-                    //       const RecommendedMoviesWidget(),
-                    //   itemCount: 7,
-                    // )
                     ),
               ],
             ),

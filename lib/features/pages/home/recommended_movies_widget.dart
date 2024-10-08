@@ -35,7 +35,7 @@ class RecommendedMoviesWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                   child: Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         width: 96,
                         height: 130,
                         child: Image.network(
@@ -61,10 +61,13 @@ class RecommendedMoviesWidget extends StatelessWidget {
                   padding: const EdgeInsets.all(3.0),
                   child: Row(
                     children: <Widget>[
-                      const Icon(
-                        Icons.star_purple500_sharp,
-                        color: ColorsPalette.primaryColor,
-                        size: 16,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18),
+                        child: const Icon(
+                          Icons.star_purple500_sharp,
+                          color: ColorsPalette.primaryColor,
+                          size: 16,
+                        ),
                       ),
                       const SizedBox(
                         width: 4,
@@ -77,14 +80,15 @@ class RecommendedMoviesWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Text(
-                //   results.title.toString(),
-                //   style: theme.textTheme.displaySmall,
-                // ),
+                Text(
+                  results.title.toString(),
+                  style: theme.textTheme.displaySmall!.copyWith(fontSize: 10),
+                  textAlign: TextAlign.center,
+                ),
                 Text(
                   results.releaseDate.toString(),
                   style: theme.textTheme.displaySmall!
-                      .copyWith(color: const Color(0xffB5B4B4)),
+                      .copyWith(color: const Color(0xffB5B4B4), fontSize: 10),
                 ),
               ],
             ),
