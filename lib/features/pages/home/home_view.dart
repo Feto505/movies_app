@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:movie/core/config/page_routes_name.dart';
 import 'package:movie/core/theme/colors_palette.dart';
+import 'package:movie/data/models/popular.dart';
+import 'package:movie/data/models/topRated.dart';
+import 'package:movie/data/models/upcoming.dart';
+import 'package:movie/features/pages/home/popular_widget.dart';
 import 'package:movie/features/pages/home/recommended_movies_widget.dart';
 import 'package:movie/features/pages/home/releases_movies_widget.dart';
 
+import '../../../data/data_sources/api_manager.dart';
+
 class HomeView extends StatelessWidget {
-  const HomeView({super.key});
+  const HomeView({
+    super.key,
+  });
+
+  // final ResultsPopular? result;
 
   @override
   Widget build(BuildContext context) {
@@ -14,58 +23,52 @@ class HomeView extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Stack(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.pushNamed(
-                          context, PageRoutesName.movie_details);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20, bottom: 8),
-                      child: Image.asset(
-                        'assets/images/exmp3.png',
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: mediaQuery.height * .2),
-                    child: const Text("data"),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: mediaQuery.height * .2),
-                    child: const Text("data data"),
-                  ),
-                ],
-              ),
-              Positioned(
-                left: 0,
-                bottom: -1,
-                child: Stack(
-                  children: [
-                    Column(
-                      children: [
-                        ClipRRect(
-                            child: Image.asset("assets/images/exem4.png")),
-                      ],
-                    ),
-                    Positioned(
-                      left: 0,
-                      top: 0,
-                      child: ClipRRect(
-                          child: Image.asset('assets/icons/bookmark1.png')),
-                    )
-                  ],
-                ),
-              ),
-            ],
+          Container(
+            color: ColorsPalette.black2Color,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                    height: 330,
+                    child: FutureBuilder<List<ResultsPopular>>(
+                      future: ApiManager.fetchPopularMoviesList(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Error fetching");
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorsPalette.primaryColor,
+                            ),
+                          );
+                        }
+                        List<ResultsPopular> articleList = snapshot.data ?? [];
+                        // return CategoryViewDetails(sourceList: sourceList);
+                        return Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                PopularWidget(results: articleList[index]),
+                            itemCount: articleList.length,
+                            // itemCount: 2,
+                          ),
+                        );
+                      },
+                    )),
+                // SizedBox(
+                //     height: 150,
+                //     child: ListView.builder(
+                //       scrollDirection: Axis.horizontal,
+                //       itemBuilder: (context, index) =>
+                //            ReleasesMoviesWidget(results: ,),
+                //       itemCount: 10,
+                //     )),
+              ],
+            ),
           ),
+          // PopularWidget(results: result.backdropPath,),
           const SizedBox(
             height: 10,
           ),
@@ -83,13 +86,50 @@ class HomeView extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     )),
                 SizedBox(
-                    height: 150,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          const ReleasesMoviesWidget(),
-                      itemCount: 10,
-                    )),
+                    height: 220,
+                    child: FutureBuilder<List<Results>>(
+                      future: ApiManager.fetchUpcomingMoviesList(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Error fetching");
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorsPalette.primaryColor,
+                            ),
+                          );
+                        }
+                        List<Results> articleList = snapshot.data ?? [];
+                        // return CategoryViewDetails(sourceList: sourceList);
+                        return Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                ReleasesMoviesWidget(
+                                    results: articleList[index]),
+                            itemCount: articleList.length,
+                            // itemCount: 2,
+                          ),
+                        );
+                      },
+                    )
+                    // ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (context, index) =>
+                    //       const RecommendedMoviesWidget(),
+                    //   itemCount: 7,
+                    // )
+                    ),
+                // SizedBox(
+                //     height: 150,
+                //     child: ListView.builder(
+                //       scrollDirection: Axis.horizontal,
+                //       itemBuilder: (context, index) =>
+                //            ReleasesMoviesWidget(results: ,),
+                //       itemCount: 10,
+                //     )),
               ],
             ),
           ),
@@ -111,12 +151,55 @@ class HomeView extends StatelessWidget {
                     )),
                 SizedBox(
                     height: 220,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>
-                          const RecommendedMoviesWidget(),
-                      itemCount: 7,
-                    )),
+                    child: FutureBuilder<List<ResultsTopRated>>(
+                      future: ApiManager.fetchTopRatedMoviesList(),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text("Error fetching");
+                        }
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: ColorsPalette.primaryColor,
+                            ),
+                          );
+                        }
+                        List<ResultsTopRated> articleList = snapshot.data ?? [];
+                        // return CategoryViewDetails(sourceList: sourceList);
+                        return Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                // Column(
+                                //   children: [
+                                //     Center(
+                                //       child: Text(articleList[index].title.toString(),style: const TextStyle(
+                                //           color: Colors.red
+                                //       ),),
+                                //     ),
+                                //     // Center(
+                                //     //   child: Text(articleList[1].title.toString(),style: TextStyle(
+                                //     //     color: Colors.red
+                                //     //   ),),
+                                //     // ),
+                                //   ],
+                                // ),
+                                RecommendedMoviesWidget(
+                                    results: articleList[index]),
+                            itemCount: articleList.length,
+                            // itemCount: 2,
+                          ),
+                        );
+                      },
+                    )
+                    // ListView.builder(
+                    //   scrollDirection: Axis.horizontal,
+                    //   itemBuilder: (context, index) =>
+                    //       const RecommendedMoviesWidget(),
+                    //   itemCount: 7,
+                    // )
+                    ),
               ],
             ),
           ),

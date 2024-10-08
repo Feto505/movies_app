@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
+import 'package:movie/data/models/popular.dart';
 import 'package:movie/features/pages/home/similar.dart';
 
 class MovieDetails extends StatelessWidget {
@@ -8,6 +9,8 @@ class MovieDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var result = ModalRoute.of(context)!.settings.arguments as ResultsPopular;
+    // List<String> f=result.overview.toString().split('');
     return Scaffold(
       // backgroundColor: Color(0xff282A28),
       appBar: AppBar(
@@ -17,12 +20,12 @@ class MovieDetails extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.asset(
-              'assets/images/exmp3.png',
+            Image.network(
+              "https://image.tmdb.org/t/p/w500${result.backdropPath}",
               fit: BoxFit.cover,
             ),
-            const Text("data"),
-            const Text("data"),
+            Text('${result.title}'),
+            Text('${result.releaseDate}'),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
@@ -32,7 +35,11 @@ class MovieDetails extends StatelessWidget {
                     borderRadius: BorderRadius.circular(8),
                     child: Stack(
                       children: [
-                        Image.asset("assets/images/exem4.png"),
+                        Image.network(
+                          width: 120,
+                          height: 160,
+                          "https://image.tmdb.org/t/p/w500${result.posterPath}",
+                        ),
                         Positioned(
                             left: 0,
                             top: 0,
@@ -85,8 +92,14 @@ class MovieDetails extends StatelessWidget {
                         const SizedBox(
                           height: 12,
                         ),
-                        const Text(
-                            'film details film details\n film details film details\n film detailsfilm details ')
+                        SizedBox(
+                          width: 205,
+                          child: Column(
+                            children: [
+                              Text(result.overview.toString()),
+                            ],
+                          ),
+                        )
                       ],
                     ),
                   )
