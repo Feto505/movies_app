@@ -72,7 +72,8 @@ class _MovieListPageState extends State<MovieListPage> {
             title: Text(movies[index]['title'],  style: theme.textTheme.bodyMedium!,),
             subtitle: Text(movies[index]['release_date'] ?? 'Unknown'),
             onTap: () {
-              Navigator.pushNamed(context,  PageRoutesName.movie_details);
+              Navigator.pushNamed(context, PageRoutesName.releaseDetails,
+                  arguments: movies);
             },
           );
         },
