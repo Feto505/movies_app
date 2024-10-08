@@ -38,7 +38,7 @@ class MovieDetails extends StatelessWidget {
                             top: 0,
                             child: ClipRRect(
                                 child:
-                                    Image.asset('assets/icons/bookmark1.png'))),
+                                Image.asset('assets/icons/bookmark1.png'))),
                       ],
                     ),
                   ),
@@ -103,7 +103,7 @@ class MovieDetails extends StatelessWidget {
                 children: [
                   Container(
                       padding:
-                          const EdgeInsets.only(left: 20, top: 15, bottom: 4),
+                      const EdgeInsets.only(left: 20, top: 15, bottom: 4),
                       child: Text(
                         "More Like This",
                         style: theme.textTheme.bodyMedium!
@@ -114,7 +114,7 @@ class MovieDetails extends StatelessWidget {
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) =>
-                            const SimilarMoviesWidget(),
+                        const SimilarMoviesWidget(),
                         itemCount: 7,
                       )),
                 ],
