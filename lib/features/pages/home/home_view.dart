@@ -19,7 +19,6 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var mediaQuery = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
         children: [
