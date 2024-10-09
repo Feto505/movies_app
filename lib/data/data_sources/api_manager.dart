@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:movie/data/models/popular.dart';
+import 'package:movie/data/models/similar.dart';
 import 'package:movie/data/models/topRated.dart';
 import 'package:movie/data/models/upcoming.dart';
 
@@ -97,6 +98,32 @@ class ApiManager {
     }
   }
 
+  static Future<List<ResultsSimilar>> fetchSimilarMoviesList(int? id) async {
+    // 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1'
+    var url = Uri.https(
+      Constants.domain,
+      "/3/movie/$id/similar",
+      {
+        "api_key": Constants.apiKey,
+        "language": "en-US",
+        "page": "1",
+      },
+    );
+    final response = await http.get(url);
+    print(response.body);
+    log(response.body);
+    log(response.statusCode.toString());
+    if (response.statusCode == 200) {
+      //Parsing
+      Map<String, dynamic> data = jsonDecode(response.body);
+      Similar similar = Similar.fromJson(data);
+
+      return similar.results ?? [];
+    } else {
+      print('-------------------------------------');
+      throw Exception("Failed to get source list");
+    }
+  }
 
   /// =======================================================
 // static Future<List<Article>> fetchArticlesList({String? sourceId,String? q}) async{

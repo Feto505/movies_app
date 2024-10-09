@@ -5,7 +5,6 @@ import '../../../core/config/page_routes_name.dart';
 
 class PopularWidget extends StatelessWidget {
   final ResultsPopular results;
-
   const PopularWidget({super.key, required this.results});
 
   @override
@@ -104,12 +103,16 @@ class PopularWidget extends StatelessWidget {
                         arguments: results);
                   },
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 20, bottom: 8),
-                    child: Image.network(
-                      "https://image.tmdb.org/t/p/w500${results.backdropPath}",
-                      // 'assets/images/exmp3.png',
-                      fit: BoxFit.cover,
-                      width: mediaQuery.width,
+                    padding: const EdgeInsets.only(bottom: 8),
+                    child: ClipRRect(
+                      clipBehavior: Clip.antiAlias,
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.network(
+                        "https://image.tmdb.org/t/p/w500${results.backdropPath}",
+                        // 'assets/images/exmp3.png',
+                        fit: BoxFit.cover,
+                        width: mediaQuery.width,
+                      ),
                     ),
                   ),
                 ),
@@ -140,10 +143,15 @@ class PopularWidget extends StatelessWidget {
                   Column(
                     children: [
                       ClipRRect(
-                          child: Image.network(
+                          child: Container(
                         height: 160,
-                        width: 120,
-                        "https://image.tmdb.org/t/p/w500${results.posterPath}",
+                        width: 100,
+                        child: Image.network(
+                          fit: BoxFit.cover,
+                          height: 160,
+                          width: 100,
+                          "https://image.tmdb.org/t/p/w500${results.posterPath}",
+                        ),
                       )),
                     ],
                   ),

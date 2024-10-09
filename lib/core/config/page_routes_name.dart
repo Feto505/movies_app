@@ -4,4 +4,5 @@ class PageRoutesName {
   static const String movie_details = 'movie_details';
   static const String recommendedDetails = 'recommended_details';
   static const String releaseDetails = 'release_details';
+  static const String similarDetails = 'similar_details';
 }

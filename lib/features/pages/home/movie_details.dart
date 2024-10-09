@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
 import 'package:movie/data/models/popular.dart';
+import 'package:movie/data/models/similar.dart';
 import 'package:movie/features/pages/home/similar.dart';
+
+import '../../../data/data_sources/api_manager.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key});
@@ -175,11 +178,31 @@ class MovieDetails extends StatelessWidget {
                       )),
                   SizedBox(
                       height: 220,
-                      child: ListView.builder(
+                      child: FutureBuilder<List<ResultsSimilar>>(
+                        future: ApiManager.fetchSimilarMoviesList(result.id),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasError) {
+                            return const Text("Error fetching");
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: ColorsPalette.primaryColor,
+                              ),
+                            );
+                          }
+                          List<ResultsSimilar> resultList = snapshot.data ?? [];
+                          return Expanded(
+                            child: ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) =>
-                            const SimilarMoviesWidget(),
-                        itemCount: 7,
+                                  SimilarMoviesWidget(
+                                      resultsSimilar: resultList[index]),
+                              itemCount: resultList.length,
+                            ),
+                          );
+                        },
                       )),
                 ],
               ),

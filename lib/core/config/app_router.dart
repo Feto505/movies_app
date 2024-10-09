@@ -4,6 +4,7 @@ import 'package:movie/features/pages/home/movie_details.dart';
 import 'package:movie/features/pages/home/recommended_details.dart';
 import 'package:movie/features/pages/home/release_details.dart';
 
+import '../../features/pages/home/similar_details.dart';
 import '../../features/pages/splash/splash_view.dart';
 import 'page_routes_name.dart';
 
@@ -27,6 +28,9 @@ class AppRouter {
       case PageRoutesName.releaseDetails:
         return MaterialPageRoute(
             builder: (context) => const ReleasedDetails(), settings: settings);
+      case PageRoutesName.similarDetails:
+        return MaterialPageRoute(
+            builder: (context) => const SimilarDetails(), settings: settings);
 
       default:
         return MaterialPageRoute(

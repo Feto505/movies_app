@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:movie/data/models/upcoming.dart';
+import 'package:movie/core/theme/colors_palette.dart';
+import 'package:movie/data/models/similar.dart';
 
-import '../../../core/theme/colors_palette.dart';
-
-class ReleasedDetails extends StatelessWidget {
-  const ReleasedDetails({super.key});
+class SimilarDetails extends StatelessWidget {
+  const SimilarDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var result = ModalRoute.of(context)!.settings.arguments as Results;
+    var result = ModalRoute.of(context)!.settings.arguments as ResultsSimilar;
     var theme = Theme.of(context);
     return Scaffold(
       // backgroundColor: Color(0xff282A28),
@@ -24,9 +23,7 @@ class ReleasedDetails extends StatelessWidget {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(25),
                 child: Image.network(
-                  "https://image.tmdb.org/3/movie/top_rated/t/p/w500${result.backdropPath}",
-                  // result.posterPath.toString(),
-                  // 'assets/images/exmp3.png',
+                  "https://image.tmdb.org/t/p/w500${result.backdropPath}",
                   fit: BoxFit.cover,
                 ),
               ),
@@ -60,7 +57,7 @@ class ReleasedDetails extends StatelessWidget {
                         Row(
                           children: [
                             const Text('Rate: '),
-                            const Icon(
+                            Icon(
                               Icons.star,
                               color: ColorsPalette.primaryColor,
                               size: 17,
@@ -90,7 +87,6 @@ class ReleasedDetails extends StatelessWidget {
                 child: Column(
                   children: [
                     const Text("Overview"),
-                    Text(result.id.toString()),
                     const Divider(
                       color: Colors.white54,
                     ),
