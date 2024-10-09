@@ -23,8 +23,8 @@ class SimilarMoviesWidget extends StatelessWidget {
           elevation: 0.5,
           shadowColor: Colors.white,
           child: Container(
-            width: 102,
-            height: 185,
+            width: 135,
+            height: 190,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12),
               color: ColorsPalette.black3Color,

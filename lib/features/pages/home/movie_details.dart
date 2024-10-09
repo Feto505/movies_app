@@ -177,7 +177,7 @@ class MovieDetails extends StatelessWidget {
                             .copyWith(color: Colors.white),
                       )),
                   SizedBox(
-                      height: 220,
+                      height: 235,
                       child: FutureBuilder<List<ResultsSimilar>>(
                         future: ApiManager.fetchSimilarMoviesList(result.id),
                         builder: (context, snapshot) {
