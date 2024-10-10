@@ -19,7 +19,7 @@ class _LayOutViewState extends State<LayOutView> {
     const HomeView(),
     const SearchView(),
     const BrowseView(),
-    const WatchlistView(),
+    const Watchlist(),
   ];
 
   @override

@@ -1,131 +1,196 @@
 import 'package:flutter/material.dart';
-import 'package:movie/core/theme/colors_palette.dart';
-import 'package:movie/features/pages/home/similar.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:movie/api/network/remot/api_manager.dart';
+import 'package:movie/models/movie_details_response.dart';
+import 'package:movie/widgets/add_movie.dart';
+import 'package:movie/widgets/more_like_this_widget.dart';
 
+import '../../../core/constants.dart';
 class MovieDetails extends StatelessWidget {
-  const MovieDetails({super.key});
+  static const String routeName = "MovieDetails";
+  String? movieId;
+  var movie;
+
+  MovieDetails({super.key, required this.movieId, required this.movie});
 
   @override
   Widget build(BuildContext context) {
-    var theme = Theme.of(context);
     return Scaffold(
-      // backgroundColor: Color(0xff282A28),
-      appBar: AppBar(
-        title: const Text('Title'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Image.asset(
-              'assets/images/exmp3.png',
-              fit: BoxFit.cover,
-            ),
-            const Text("data"),
-            const Text("data"),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+      body: FutureBuilder(
+        future: ApiManager.getMovieDetails(movieId!),
+        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(8),
-                    child: Stack(
+                  Text(
+                    "Something went wrong",
+                    style: TextStyle(color: Colors.white, fontSize: 18.sp),
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: const Text("Try Again"),
+                  ),
+                ],
+              ),
+            );
+          }
+          final MovieDetailsResponse movieDetails = snapshot.data!;
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Stack(
+                alignment: Alignment.center,
+                children: [
+                  Image.network(
+                    "$baseImageUrl/original/${movieDetails.backdropPath!}",
+                    fit: BoxFit.cover,
+                  ),
+                  const Icon(
+                    Icons.play_circle,
+                    size: 90,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 20.h),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      movieDetails.title!,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.sp,
+                        fontWeight: FontWeight.bold,),
+                    ),
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    Row(
                       children: [
-                        Image.asset("assets/images/exem4.png"),
-                        Positioned(
-                            left: 0,
-                            top: 0,
-                            child: ClipRRect(
-                                child:
-                                Image.asset('assets/icons/bookmark1.png'))),
+                        Text(
+                          movieDetails.releaseDate!.substring(0, 4),
+                          style: TextStyle(
+                            color: Colors.grey[300],
+                            fontSize: 17.sp,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          "Vote Average: ${movieDetails.voteAverage!}",
+                          style: TextStyle(
+                            color: Colors.grey[300],
+                            fontSize: 17.sp,
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Row(
-                          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                      color: Colors.white, width: 2)),
-                              child: const Text("data"),
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                      color: Colors.white, width: 2)),
-                              child: const Text("data"),
-                            ),
-                            const SizedBox(
-                              width: 12,
-                            ),
-                            Container(
-                              padding: const EdgeInsets.all(4),
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(4),
-                                  border: Border.all(
-                                      color: Colors.white, width: 2)),
-                              child: const Text("data"),
-                            ),
-                          ],
+                        SizedBox(
+                          height: 220,
+                          child: Stack(
+                            alignment: Alignment.topLeft,
+                            children: [
+                              CachedNetworkImage(
+                                imageUrl:
+                                "$baseImageUrl/original/${movieDetails.posterPath!}",
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                  child: CircularProgressIndicator(
+                                    value: downloadProgress.progress,),),
+                                errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
+                              ),
+                              AddMovie(result: movie),
+                              // AddMovie(result: movie),
+                            ],
+                          ),
                         ),
-                        const SizedBox(
-                          height: 12,
+                        SizedBox(
+                          width: 15.h,
                         ),
-                        const Text(
-                            'film details film details\n film details film details\n film detailsfilm details ')
+                        Expanded(
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 110,
+                                child: GridView.builder(
+                                  itemCount: movieDetails.genres?.length,
+                                  gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 8,
+                                    crossAxisSpacing: 10,
+                                    childAspectRatio: 6/2,
+                                  ),
+                                  itemBuilder: (context, index) {
+                                    return Container(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 18.w, vertical: 5.h,),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(8.r),
+                                        border: Border.all(
+                                          color: Colors.white60, width: 2,),),
+                                      child: Center(
+                                        child: Text(
+                                          movieDetails.genres?[index].name ??
+                                              "",
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 13.sp,),
+                                        ),
+                                      ),);
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              SizedBox(
+                                child: Text("${movieDetails.overview}",
+                                  maxLines: 8,
+                                  overflow: TextOverflow.ellipsis,
+                                  style:
+                                  const TextStyle(color: Colors.white),),),
+                              SizedBox(height: 10.h),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.star,
+                                    color: Colors.amberAccent,
+                                    size: 20,
+                                  ),
+                                  SizedBox(width: 10.h),
+                                  Text("${movieDetails.voteAverage}",
+                                    style: const TextStyle(
+                                      color: Colors.white, fontSize: 18,),),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
                       ],
                     ),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-            Container(
-              color: ColorsPalette.black2Color,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                      padding:
-                      const EdgeInsets.only(left: 20, top: 15, bottom: 4),
-                      child: Text(
-                        "More Like This",
-                        style: theme.textTheme.bodyMedium!
-                            .copyWith(color: Colors.white),
-                      )),
-                  SizedBox(
-                      height: 220,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) =>
-                        const SimilarMoviesWidget(),
-                        itemCount: 7,
-                      )),
-                ],
+              MoreLikeThisWidget(
+                movieId: movieDetails.id.toString(),
               ),
-            ),
-            const SizedBox(
-              height: 15,
-            ),
-          ],
-        ),
-      ),
-    );
+            ],
+          );
+        },
+      ),);
   }
 }
