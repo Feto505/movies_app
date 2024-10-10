@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
+import 'package:movie/data/models/movies_model.dart';
 
 import '../../../core/config/page_routes_name.dart';
-import '../../../data/models/topRated.dart';
 
 class RecommendedMoviesWidget extends StatelessWidget {
-  final ResultsTopRated results;
+  final Results results;
 
   const RecommendedMoviesWidget({super.key, required this.results});
 

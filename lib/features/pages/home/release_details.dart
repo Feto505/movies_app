@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:movie/data/models/upcoming.dart';
+import 'package:movie/data/models/movies_model.dart';
 
 import '../../../core/theme/colors_palette.dart';
 

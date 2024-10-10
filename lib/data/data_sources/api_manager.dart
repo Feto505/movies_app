@@ -1,11 +1,7 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
-import 'package:movie/data/models/popular.dart';
-import 'package:movie/data/models/similar.dart';
-import 'package:movie/data/models/topRated.dart';
-import 'package:movie/data/models/upcoming.dart';
+import 'package:movie/data/models/movies_model.dart';
 
 import '../../core/constants.dart';
 
@@ -25,13 +21,13 @@ class ApiManager {
       },
     );
     final response = await http.get(url);
-    print(response.body);
-    log(response.body);
-    log(response.statusCode.toString());
+    // print(response.body);
+    // log(response.body);
+    // log(response.statusCode.toString());
     if (response.statusCode == 200) {
       //Parsing
       Map<String, dynamic> data = jsonDecode(response.body);
-      Upcoming upComing = Upcoming.fromJson(data);
+      MoviesModels upComing = MoviesModels.fromJson(data);
 
       return upComing.results ?? [];
     } else {
@@ -40,29 +36,22 @@ class ApiManager {
     }
   }
 
-  static Future<List<ResultsTopRated>> fetchTopRatedMoviesList() async {
+  static Future<List<Results>> fetchTopRatedMoviesList() async {
     // 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1'
     var url = Uri.https(
       Constants.domain,
       "/3/movie/top_rated",
       {
-        // "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2NzU2MDRhODNjMmQxN2QxNjgzZGY3
-        // ZjQyNmQ4YzViNCIsIm5iZiI6MTcyODEyODk3MS44OTgxNTEsInN1YiI6IjY3MDEwNGYyNzgzMGMxMzAxZTdjZjZiYiI
-        // sInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.yeOkmUTbJyzUGLBO2hfD1nfywskLfzxbsh4ZPuqUhxA",
-        // "category": categoryId,
         "api_key": Constants.apiKey,
         "language": "en-US",
         "page": "1",
       },
     );
     final response = await http.get(url);
-    print(response.body);
-    log(response.body);
-    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       //Parsing
       Map<String, dynamic> data = jsonDecode(response.body);
-      TopRated topRated = TopRated.fromJson(data);
+      MoviesModels topRated = MoviesModels.fromJson(data);
 
       return topRated.results ?? [];
     } else {
@@ -71,7 +60,7 @@ class ApiManager {
     }
   }
 
-  static Future<List<ResultsPopular>> fetchPopularMoviesList() async {
+  static Future<List<Results>> fetchPopularMoviesList() async {
     // 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1'
     var url = Uri.https(
       Constants.domain,
@@ -83,13 +72,10 @@ class ApiManager {
       },
     );
     final response = await http.get(url);
-    print(response.body);
-    log(response.body);
-    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       //Parsing
       Map<String, dynamic> data = jsonDecode(response.body);
-      Popular popular = Popular.fromJson(data);
+      MoviesModels popular = MoviesModels.fromJson(data);
 
       return popular.results ?? [];
     } else {
@@ -98,7 +84,7 @@ class ApiManager {
     }
   }
 
-  static Future<List<ResultsSimilar>> fetchSimilarMoviesList(int? id) async {
+  static Future<List<Results>> fetchSimilarMoviesList(int? id) async {
     // 'https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1'
     var url = Uri.https(
       Constants.domain,
@@ -110,13 +96,10 @@ class ApiManager {
       },
     );
     final response = await http.get(url);
-    print(response.body);
-    log(response.body);
-    log(response.statusCode.toString());
     if (response.statusCode == 200) {
       //Parsing
       Map<String, dynamic> data = jsonDecode(response.body);
-      Similar similar = Similar.fromJson(data);
+      MoviesModels similar = MoviesModels.fromJson(data);
 
       return similar.results ?? [];
     } else {
@@ -124,6 +107,25 @@ class ApiManager {
       throw Exception("Failed to get source list");
     }
   }
+
+//   Future<Movies> fetchMoviesByGenre(int genreId) async {
+//     final response = await http.get(Uri.parse(
+//         'https://api.themoviedb.org/3/discover/movie?api_key=675604a83c2d17d1683df7f426d8c5b4&with_genres=$genreId'));
+//
+//     if (response.statusCode == 200) {
+//       return Movies.fromJson(json.decode(response.body));
+//     } else {
+//       throw Exception('Failed to load movies');
+//     }
+//   }
+//
+// // Example usage:
+//   void loadMovies() async {
+//     Movies movies = await fetchMoviesByGenre(28);
+//     movies.results?.forEach((result) {
+//       print(result.title);
+//     });
+//   }
 
   /// =======================================================
 // static Future<List<Article>> fetchArticlesList({String? sourceId,String? q}) async{

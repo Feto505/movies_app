@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
-import 'package:movie/data/models/popular.dart';
-import 'package:movie/data/models/similar.dart';
+import 'package:movie/data/models/movies_model.dart';
 import 'package:movie/features/pages/home/similar.dart';
 
 import '../../../data/data_sources/api_manager.dart';
@@ -12,7 +11,7 @@ class MovieDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
-    var result = ModalRoute.of(context)!.settings.arguments as ResultsPopular;
+    var result = ModalRoute.of(context)!.settings.arguments as Results;
     // List<String> f=result.overview.toString().split('');
     return Scaffold(
       // backgroundColor: Color(0xff282A28),
@@ -178,7 +177,7 @@ class MovieDetails extends StatelessWidget {
                       )),
                   SizedBox(
                       height: 235,
-                      child: FutureBuilder<List<ResultsSimilar>>(
+                      child: FutureBuilder<List<Results>>(
                         future: ApiManager.fetchSimilarMoviesList(result.id),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
@@ -192,7 +191,7 @@ class MovieDetails extends StatelessWidget {
                               ),
                             );
                           }
-                          List<ResultsSimilar> resultList = snapshot.data ?? [];
+                          List<Results> resultList = snapshot.data ?? [];
                           return Expanded(
                             child: ListView.builder(
                         scrollDirection: Axis.horizontal,

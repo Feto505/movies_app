@@ -1,8 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
-import 'package:movie/data/models/popular.dart';
-import 'package:movie/data/models/topRated.dart';
-import 'package:movie/data/models/upcoming.dart';
+import 'package:movie/data/models/movies_model.dart';
 import 'package:movie/features/pages/home/popular_widget.dart';
 import 'package:movie/features/pages/home/recommended_movies_widget.dart';
 import 'package:movie/features/pages/home/releases_movies_widget.dart';
@@ -10,8 +9,10 @@ import 'package:movie/features/pages/home/releases_movies_widget.dart';
 import '../../../data/data_sources/api_manager.dart';
 
 class HomeView extends StatelessWidget {
+  // final ResultsPopular result;
   const HomeView({
     super.key,
+    // required this.result
   });
 
   // final ResultsPopular? result;
@@ -23,14 +24,50 @@ class HomeView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            // Container(
+            //   color: ColorsPalette.black2Color,
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       SizedBox(
+            //           height: 280,
+            //           child: FutureBuilder<List<ResultsPopular>>(
+            //             future: ApiManager.fetchPopularMoviesList(),
+            //             builder: (context, snapshot) {
+            //               if (snapshot.hasError) {
+            //                 return const Text("Error fetching");
+            //               }
+            //               if (snapshot.connectionState ==
+            //                   ConnectionState.waiting) {
+            //                 return const Center(
+            //                   child: CircularProgressIndicator(
+            //                     color: ColorsPalette.primaryColor,
+            //                   ),
+            //                 );
+            //               }
+            //               List<ResultsPopular> resultList = snapshot.data ?? [];
+            //
+            //               return Expanded(
+            //                 child: ListView.builder(
+            //                   scrollDirection: Axis.horizontal,
+            //                   itemBuilder: (context, index) =>
+            //                       PopularWidget(results: resultList[index]),
+            //                   itemCount: resultList.length,
+            //                 ),
+            //               );
+            //             },
+            //           )),
+            //     ],
+            //   ),
+            // ),
             Container(
               color: ColorsPalette.black2Color,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                      height: 280,
-                      child: FutureBuilder<List<ResultsPopular>>(
+                      height: 270,
+                      child: FutureBuilder<List<Results>>(
                         future: ApiManager.fetchPopularMoviesList(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
@@ -44,14 +81,20 @@ class HomeView extends StatelessWidget {
                               ),
                             );
                           }
-                          List<ResultsPopular> resultList = snapshot.data ?? [];
+                          List<Results> resultList = snapshot.data ?? [];
 
                           return Expanded(
-                            child: ListView.builder(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
+                            child: CarouselSlider.builder(
+                              itemBuilder: (context, index, realIndex) =>
                                   PopularWidget(results: resultList[index]),
                               itemCount: resultList.length,
+                              options: CarouselOptions(
+                                  scrollPhysics: const BouncingScrollPhysics(),
+                                  autoPlay: true,
+                                  enlargeCenterPage: true,
+                                  autoPlayInterval: const Duration(seconds: 3),
+                                  viewportFraction: 1,
+                                  aspectRatio: 12 / 9),
                             ),
                           );
                         },
@@ -59,6 +102,7 @@ class HomeView extends StatelessWidget {
                 ],
               ),
             ),
+
             // PopularWidget(results: result.backdropPath,),
             const SizedBox(
               height: 10,
@@ -125,7 +169,7 @@ class HomeView extends StatelessWidget {
                       )),
                   SizedBox(
                       height: 220,
-                      child: FutureBuilder<List<ResultsTopRated>>(
+                      child: FutureBuilder<List<Results>>(
                         future: ApiManager.fetchTopRatedMoviesList(),
                         builder: (context, snapshot) {
                           if (snapshot.hasError) {
@@ -139,8 +183,7 @@ class HomeView extends StatelessWidget {
                               ),
                             );
                           }
-                          List<ResultsTopRated> resultList =
-                              snapshot.data ?? [];
+                          List<Results> resultList = snapshot.data ?? [];
 
                           return Expanded(
                             child: ListView.builder(

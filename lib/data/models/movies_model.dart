@@ -4,14 +4,14 @@
 /// total_pages : 70
 /// total_results : 1385
 
-class Upcoming {
+class MoviesModels {
   Dates? dates;
   int? page;
   List<Results>? results;
   int? totalPages;
   int? totalResults;
 
-  Upcoming({
+  MoviesModels({
     this.dates,
     this.page,
     this.results,
@@ -19,7 +19,7 @@ class Upcoming {
     this.totalResults,
   });
 
-  Upcoming.fromJson(dynamic json) {
+  MoviesModels.fromJson(dynamic json) {
     dates = json['dates'] != null ? Dates.fromJson(json['dates']) : null;
     page = json['page'];
     if (json['results'] != null) {

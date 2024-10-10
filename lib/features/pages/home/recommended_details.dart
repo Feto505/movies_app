@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
-import 'package:movie/data/models/topRated.dart';
+import 'package:movie/data/models/movies_model.dart';
 
 class RecommendedDetails extends StatelessWidget {
   const RecommendedDetails({super.key});
 
   @override
   Widget build(BuildContext context) {
-    var result = ModalRoute.of(context)!.settings.arguments as ResultsTopRated;
+    var result = ModalRoute.of(context)!.settings.arguments as Results;
     var theme = Theme.of(context);
     return Scaffold(
       // backgroundColor: Color(0xff282A28),
