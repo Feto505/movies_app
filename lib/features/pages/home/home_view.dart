@@ -2,11 +2,11 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
 import 'package:movie/data/models/movies_model.dart';
-import 'package:movie/features/pages/home/popular_widget.dart';
-import 'package:movie/features/pages/home/recommended_movies_widget.dart';
-import 'package:movie/features/pages/home/releases_movies_widget.dart';
+import 'package:movie/features/pages/home/widgets/releases_movies_widget.dart';
 
 import '../../../data/data_sources/api_manager.dart';
+import 'widgets/popular_widget.dart';
+import 'widgets/recommended_movies_widget.dart';
 
 class HomeView extends StatelessWidget {
   // final ResultsPopular result;
@@ -24,42 +24,6 @@ class HomeView extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            // Container(
-            //   color: ColorsPalette.black2Color,
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       SizedBox(
-            //           height: 280,
-            //           child: FutureBuilder<List<ResultsPopular>>(
-            //             future: ApiManager.fetchPopularMoviesList(),
-            //             builder: (context, snapshot) {
-            //               if (snapshot.hasError) {
-            //                 return const Text("Error fetching");
-            //               }
-            //               if (snapshot.connectionState ==
-            //                   ConnectionState.waiting) {
-            //                 return const Center(
-            //                   child: CircularProgressIndicator(
-            //                     color: ColorsPalette.primaryColor,
-            //                   ),
-            //                 );
-            //               }
-            //               List<ResultsPopular> resultList = snapshot.data ?? [];
-            //
-            //               return Expanded(
-            //                 child: ListView.builder(
-            //                   scrollDirection: Axis.horizontal,
-            //                   itemBuilder: (context, index) =>
-            //                       PopularWidget(results: resultList[index]),
-            //                   itemCount: resultList.length,
-            //                 ),
-            //               );
-            //             },
-            //           )),
-            //     ],
-            //   ),
-            // ),
             Container(
               color: ColorsPalette.black2Color,
               child: Column(

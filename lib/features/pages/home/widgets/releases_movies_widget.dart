@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:movie/data/models/movies_model.dart';
 
-import '../../../core/config/page_routes_name.dart';
+import '../../../../core/config/page_routes_name.dart';
 
 class ReleasesMoviesWidget extends StatelessWidget {
   final Results results;

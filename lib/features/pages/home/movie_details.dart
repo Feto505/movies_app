@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie/core/theme/colors_palette.dart';
 import 'package:movie/data/models/movies_model.dart';
-import 'package:movie/features/pages/home/similar.dart';
 
 import '../../../data/data_sources/api_manager.dart';
+import 'widgets/similar.dart';
 
 class MovieDetails extends StatelessWidget {
   const MovieDetails({super.key});
